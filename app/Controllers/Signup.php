@@ -6,9 +6,12 @@ class Signup extends BaseController {
 
     protected array $data = [
         "title" => "Registrazione",
+        "regioni" => [],
     ];
 
     public function index() {
+
+        $this->data['regioni'] = [['id' => 1, 'nome' => "emilia-romagna"]];
         echo view("user_auth/signup", $this->data);
     }
 
