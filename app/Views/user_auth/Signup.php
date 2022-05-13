@@ -18,6 +18,8 @@
     
     <label for="sesso-f">Femmina</label>
     <input type="radio" name="sesso" id="sesso-f" value="f">
+
+    <input type="submit" name="submit" value="Registrati">
 </form>
 
 <?= view_cell("\App\Libraries\ViewCells::footer") ?>
