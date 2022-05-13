@@ -25,6 +25,13 @@
     <label for="sesso-f">Femmina</label>
     <input type="radio" name="sesso" id="sesso-f" value="f">
 
+    <label for="regione">Regione</label>
+    <select name="regione" id="regione">
+        <?php foreach ($regioni as $regione): ?>
+            <option value="<?= $regione['id'] ?>"><?= $regione['nome'] ?></option>
+        <? endforeach ?>
+    </select>
+
     <input type="submit" name="submit" value="Registrati">
 </form>
 
