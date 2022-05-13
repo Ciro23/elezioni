@@ -9,7 +9,7 @@ class Signup extends BaseController {
     ];
 
     public function index() {
-        echo view("Signup", $this->data);
+        echo view("user_auth/signup", $this->data);
     }
 
     public function signup() {
