@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Signup extends BaseController {
 
-    private array $data = [
+    protected array $data = [
         "title" => "Registrazione",
     ];
 
