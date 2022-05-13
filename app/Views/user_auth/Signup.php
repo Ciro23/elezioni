@@ -1,6 +1,12 @@
 <?= view_cell("\App\Libraries\ViewCells::header") ?>
 
 <form action="/signup-action">
+    <?php
+    if (isset($errors)) {
+        echo $errors;
+    }
+    ?>
+
     <label for="tessera-elettorale">Numero tessera elettorale</label>
     <input type="text" name="tessera-elettorale" id="tessera-elettorale" maxlength="10">
 
