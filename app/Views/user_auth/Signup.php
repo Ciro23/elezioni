@@ -1,6 +1,6 @@
 <?= view_cell("\App\Libraries\ViewCells::header") ?>
 
-<form action="/signup-action">
+<form action="/signup-action" method="post">
     <?php
     if (isset($errors)) {
         echo $errors;
