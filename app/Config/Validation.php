@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Validation\UserRules;
 use CodeIgniter\Validation\CreditCardRules;
 use CodeIgniter\Validation\FileRules;
 use CodeIgniter\Validation\FormatRules;
@@ -24,6 +25,7 @@ class Validation
         FormatRules::class,
         FileRules::class,
         CreditCardRules::class,
+        UserRules::class,
     ];
 
     /**
@@ -35,9 +37,18 @@ class Validation
     public $templates = [
         'list'   => 'CodeIgniter\Validation\Views\list',
         'single' => 'CodeIgniter\Validation\Views\single',
+		'custom_errors' => '_error_list',
     ];
 
     //--------------------------------------------------------------------
     // Rules
     //--------------------------------------------------------------------
+
+    public $user = [
+		"tessera_elettorale" => "required|is_unique[utenti.tessera_elettorale]|max_length[10]",
+		"nome" => "required|alpha|max_length[30]|is_unique[utenti.username]",
+		"cognome" => "required|max_length[30]",
+        "eta" => "required|integer",
+		"sesso" => "required"
+	];
 }
