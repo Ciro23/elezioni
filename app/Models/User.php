@@ -7,17 +7,13 @@ use CodeIgniter\Model;
 
 class User extends Model {
 
-    protected $table = "utente";
+    protected $table = "utenti";
 
-    protected $useTimestamps = true;
-
-    protected $useSoftDeletes = true;
-
-    protected $allowedFields = ["scheda_elettorale", "nome", "cognome", "eta", "pin", "ha_votato", "sesso", "regione"];
+    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "eta", "pin", "ha_votato", "sesso", "regione"];
 
     protected $validationRules = "user";
 
-    protected $beforeInsert = ["generateRandomId", "hashPassword"];
+    protected $beforeInsert = ["generateRandomId"];
 
     /**
      * this method is called before every insert action invoked by this class
@@ -30,21 +26,8 @@ class User extends Model {
         $randomId = new RandomId();
 
         do {
-            $data['data']['id'] = $randomId->generateRandomId();
-        } while ($this->doesUserExist($data['data']['id']));
-
-        return $data;
-    }
-
-    /**
-     * this method is called before every insert action invoked by this class
-     * 
-     * @param array $data
-     * 
-     * @return array
-     */
-    public function hashPassword(array $data): array {
-        $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_BCRYPT);
+            $data['data']['pin'] = $randomId->generateRandomId();
+        } while ($this->doesUserExist($data['data']['pin']));
 
         return $data;
     }
@@ -75,8 +58,8 @@ class User extends Model {
      * @return bool
      */
     public function doesUserExist(string $id): bool {
-        $builder = $this->select("id");
-        $builder->where("id", $id);
+        $builder = $this->select("tessera_elettorale");
+        $builder->where("tessera_elettorale", $id);
 
         return $builder->countAllResults() === 1;
     }
@@ -136,12 +119,12 @@ class User extends Model {
      * @return int|null
      */
     public function getUserRole(string $id): int|null {
-        $builder = $this->select("role");
-        $builder->where("id", $id);
+        // $builder = $this->select("role");
+        // $builder->where("id", $id);
 
-        if ($builder->countAllResults(false) == 1) {
-            return $builder->get()->getRow()->role;
-        }
+        // if ($builder->countAllResults(false) == 1) {
+        //     return $builder->get()->getRow()->role;
+        // }
 
         return null;
     }
