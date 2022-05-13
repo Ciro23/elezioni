@@ -1,6 +1,6 @@
 <?= view_cell("\App\Libraries\ViewCells::header") ?>
 
-<form action="">
+<form action="/signup-action">
     <label for="tessera-elettorale">Numero tessera elettorale</label>
     <input type="text" name="tessera-elettorale" id="tessera-elettorale">
 
