@@ -48,5 +48,10 @@ class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+        $this->session = session();
+
+		$userModel = new \App\Models\User();
+		$uid = session("uid") ?? -1;
+		$this->data['is_user_admin'] = $userModel->isUserAdmin($uid);
     }
 }
