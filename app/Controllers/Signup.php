@@ -4,11 +4,14 @@ namespace App\Controllers;
 
 class Signup extends BaseController {
 
-    private array $data = [
+    protected array $data = [
         "title" => "Registrazione",
+        "regioni" => [],
     ];
 
     public function index() {
+
+        $this->data['regioni'] = [['id' => 1, 'nome' => "emilia-romagna"]];
         echo view("user_auth/signup", $this->data);
     }
 
@@ -24,7 +27,7 @@ class Signup extends BaseController {
                 "uid" => $this->request->getPost("tessera_elettorale"),
             ]);
 
-            return redirect("home");
+            return redirect()->route("votazione");
         }
 
         $this->data['errors'] = $this->validator->listErrors("custom_errors");
