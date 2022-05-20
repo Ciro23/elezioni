@@ -4,7 +4,11 @@ namespace App\Controllers;
 
 class Votazione extends BaseController {
 
-    public function index() {
+    protected array $data = [
+        "title" => "Votazione",
+    ];
 
+    public function index() {
+        echo view("user_auth/votazione",$this->data);
     }
 }
