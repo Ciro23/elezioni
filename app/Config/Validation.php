@@ -45,7 +45,6 @@ class Validation
     //--------------------------------------------------------------------
 
     public $user = [
-        // ! tessera elettorale deve essere required
 		"tessera_elettorale" => "required|is_unique[utenti.tessera_elettorale]|max_length[10]",
 		"nome" => "required|alpha_space|max_length[30]",
 		"cognome" => "required|alpha_space|max_length[30]",
