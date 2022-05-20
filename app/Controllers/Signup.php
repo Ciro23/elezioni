@@ -10,9 +10,10 @@ class Signup extends BaseController {
     ];
 
     public function index() {
+        $regionModel = new \App\Models\Region();
+        $this->data['regions'] = $regionModel->getAllRegions();
 
-        $this->data['regioni'] = [['id' => 1, 'nome' => "emilia-romagna"]];
-        echo view("user_auth/signup", $this->data);
+        echo view("user_auth/Signup", $this->data);
     }
 
     public function signup() {
@@ -30,8 +31,10 @@ class Signup extends BaseController {
             return redirect()->route("votazione");
         }
 
+        $regionModel = new \App\Models\Region();
+        $this->data['regions'] = $regionModel->getAllRegions();
         $this->data['errors'] = $this->validator->listErrors("custom_errors");
 
-        echo view("user_auth/signup", $this->data);
+        echo view("user_auth/Signup", $this->data);
     }
 }
