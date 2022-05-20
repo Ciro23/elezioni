@@ -29,7 +29,7 @@
     <select name="regione" id="regione">
         <?php foreach ($regioni as $regione): ?>
             <option value="<?= $regione['id'] ?>"><?= $regione['nome'] ?></option>
-        <? endforeach ?>
+        <?php endforeach ?>
     </select>
 
     <input type="submit" name="submit" value="Registrati">
