@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\RedirectResponse;
 
 class EmailVerification extends BaseController {
@@ -20,7 +21,7 @@ class EmailVerification extends BaseController {
     public function verificate(string $hash): RedirectResponse {
         $emailModel = new \App\Models\Email();
         if (!$emailModel->verificate($hash)) {
-           return redirect()->route("page-not-found");
+            throw new PageNotFoundException();
         }
 
         $emailModel->delete($hash);
