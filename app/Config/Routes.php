@@ -31,17 +31,29 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Signup::index');
+// $routes->get('/', 'Signup::index');
 
-$routes->group("signup", function ($routes) {
-    $routes->post("", "Signup::signup");
-    $routes->get("send-email/(:segment)", "EmailVerification::sendEmail/$1");
-    $routes->get("verificate-email/(:segment)", "EmailVerification::verificate/$1");
-});
+$routes->group(
+    "signup",
+    [
+        "filter" => "can_login_or_signup",
+    ],
+    function ($routes) {
+        $routes->get("", "Signup::index");
+        $routes->post("", "Signup::signup");
+        $routes->get("send-email/(:segment)", "EmailVerification::sendEmail/$1");
+        $routes->get("verificate-email/(:segment)", "EmailVerification::verificate/$1");
+    }
+);
 
-$routes->get("votazione", "Votazione::index", [
-    "as" => "votazione",
-]);
+$routes->get(
+    "votazione",
+    "Votazione::index",
+    [
+        "as" => "votazione",
+        "filter" => "is_logged_in",
+    ]
+);
 
 
 /*
