@@ -26,7 +26,7 @@ class User extends Model {
         $randomId = new RandomId();
 
         do {
-            $data['data']['pin'] = $randomId->generateRandomId();
+            $data['data']['pin'] = $randomId->generateRandomId(10);
         } while ($this->doesUserExist($data['data']['pin']));
 
         return $data;
