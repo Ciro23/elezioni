@@ -9,26 +9,28 @@ class Signup extends BaseController {
         "regioni" => [],
     ];
 
-    public function index() {
+    public function index(): void {
         $regionModel = new \App\Models\Region();
         $this->data['regions'] = $regionModel->getAllRegions();
 
         echo view("user_auth/Signup", $this->data);
     }
 
-    public function signup() {
+    public function signup(): mixed {
         helper("form");
 
         if ($this->validate("user")) {
+            $formData = $this->request->getPost();
+            $tessera_elettorale = $formData['tessera_elettorale'];
+
             $userModel = new \App\Models\User();
-            $userModel->save($this->request->getPost());
+            $userModel->save($formData);
 
-            $this->session->set([
-                "is_logged_in" => true,
-                "uid" => $this->request->getPost("tessera_elettorale"),
-            ]);
+            $emailModel = new \App\Models\Email();
+            $emailModel->save(['utente' => $tessera_elettorale]);
 
-            return redirect()->route("votazione");
+            $redirectUrl = base_url() . "/signup/send-email/" . $tessera_elettorale;
+            return redirect()->to($redirectUrl);
         }
 
         $regionModel = new \App\Models\Region();
