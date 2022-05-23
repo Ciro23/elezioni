@@ -9,7 +9,7 @@ class User extends Model {
 
     protected $table = "utenti";
 
-    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "eta", "pin", "ha_votato", "sesso", "regione"];
+    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "email", "eta", "pin", "ha_votato", "sesso", "regione"];
 
     protected $validationRules = "user";
 
