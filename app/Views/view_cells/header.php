@@ -19,6 +19,7 @@
 <body>
     <nav style="height: 50px; background: #f7f7f7" class="d-flex w-100 align-items-center">
         <div class="w-50 mx-auto d-flex">
+            <a href="/">Home</a>
             <?php if (session("is_logged_in") === true): ?>
                 <a href="/logout">Logout</a>
             <?php endif ?>
