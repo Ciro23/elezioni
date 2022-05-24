@@ -27,9 +27,16 @@ class User extends Model {
 
         do {
             $data['data']['pin'] = $randomId->generateRandomId(10);
-        } while ($this->doesUserExist($data['data']['pin']));
+        } while ($this->doesPinExist($data['data']['pin']));
 
         return $data;
+    }
+
+    public function hasVoted(string $pin) {
+        $builder = $this->select();
+        $builder->where("pin", $pin);
+
+        return $builder->countAllResults(false) === 1;
     }
 
     /**
