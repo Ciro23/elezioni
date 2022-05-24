@@ -13,7 +13,7 @@ class EmailVerification extends BaseController {
 
     public function sendEmail(string $user): void {
         $emailModel = new \App\Models\Email();
-        // $emailModel->sendEmail($user);
+        $emailModel->sendEmail($user);
 
         echo view("email_verification/Sending", $this->data);
     }
