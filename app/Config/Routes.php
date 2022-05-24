@@ -33,6 +33,15 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 // $routes->get('/', 'Signup::index');
 
+$routes->get(
+    "/", 
+    "Home::index",
+    [
+        "filter" => "can_login_or_signup",
+        "as" => "home",
+    ],
+);
+
 $routes->group(
     "signup",
     [
@@ -46,14 +55,34 @@ $routes->group(
     }
 );
 
-$routes->get(
-    "votazione",
-    "Votazione::index",
+$routes->group(
+    "login",
     [
-        "as" => "votazione",
-        "filter" => "is_logged_in",
-    ]
+        "filter" => "can_login_or_signup",
+    ],
+    function ($routes) {
+        $routes->get("", "Login::index");
+        $routes->post("", "Login::login");
+    }
 );
+
+$routes->get("logout", "Login::logout");
+
+$routes->group(
+    "vote",
+    [
+        "filter" => "is_logged_in",
+    ],
+    function ($routes) {
+    $routes->get(
+        "",
+        "Vote::index",
+        ["as" => "vote"],
+    );
+
+    $routes->post("", "Vote::vote");
+});
+
 
 
 /*
