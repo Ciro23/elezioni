@@ -83,7 +83,7 @@ $routes->group(
     $routes->post("", "Vote::vote");
 });
 
-
+$routes->get("results", "Result::index");
 
 /*
  * --------------------------------------------------------------------
