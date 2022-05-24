@@ -16,7 +16,7 @@ class Signup extends BaseController {
         echo view("user_auth/Signup", $this->data);
     }
 
-    public function signup(): mixed {
+    public function signup() {
         helper("form");
 
         if ($this->validate("user")) {
