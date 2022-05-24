@@ -12,10 +12,8 @@ class UserRules {
      * 
      * @return bool
      */
-    public function are_credentials_correct(string $pin, string $fields, array $data): bool {
+    public function does_pin_exist(string $pin, string $fields, array $data): bool {
         $userModel = new \App\Models\User();
-        $hashedPassword = $userModel->getUserPasswordByPin($pin);
-
-        return password_verify($data['password'], $hashedPassword);
+        return $userModel->doesPinExist($pin);
     }
 }

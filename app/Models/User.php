@@ -33,33 +33,15 @@ class User extends Model {
     }
 
     /**
-     * gets the user password given their pin
-     * 
-     * @param string $pin
-     * 
-     * @return string|null
-     */
-    public function getUserPasswordByPin(string $pin): string|null {
-        $builder = $this->select("password");
-        $builder->where("pin", $pin);
-
-        if ($builder->countAllResults(false) === 1) {
-            return $builder->get()->getRow()->password;
-        }
-
-        return null;
-    }
-
-    /**
      * checks if a user already exists
      * 
      * @param string $id
      * 
      * @return bool
      */
-    public function doesUserExist(string $id): bool {
-        $builder = $this->select("tessera_elettorale");
-        $builder->where("tessera_elettorale", $id);
+    public function doesPinExist(string $pin): bool {
+        $builder = $this->select("pin");
+        $builder->where("pin", $pin);
 
         return $builder->countAllResults() === 1;
     }
