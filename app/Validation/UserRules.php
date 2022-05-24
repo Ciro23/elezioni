@@ -16,4 +16,9 @@ class UserRules {
         $userModel = new \App\Models\User();
         return $userModel->doesPinExist($pin);
     }
+
+    public function has_not_voted(string $pin, string $fields, array $data): bool {
+        $userModel = new \App\Models\User();
+        return !$userModel->hasVoted($pin);
+    }
 }
