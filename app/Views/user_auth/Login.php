@@ -9,12 +9,14 @@
     }
     ?>
     
-    <div class="form-group pb-3">
+    <div class="form-group mb-3">
         <label class="form-label" for="pin">Pin unico</label>
         <input type="text" id="pin" name="pin" class="form-control" maxlength="10">
     </div>
 
     <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Entra</button>
+
+    <a href="/signup" class="mt-3 text-center">Non hai il pin? Registrati</a>
 </form>
 
 <?= view_cell("\App\Libraries\ViewCells::footer") ?>

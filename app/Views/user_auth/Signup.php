@@ -3,6 +3,7 @@
 <form action="/signup" method="post" style="width: 800px" class="w-30 center mt-4 mx-auto d-flex flex-column justift-content-between">
 
     <h2 class="text-center" style="color:#00b8e6">Registrazione</h2>
+    <p class="text-center">Registrati per ottenere il pin per la votazione</p>
 
     <?php
     if (isset($errors)) {
@@ -62,6 +63,8 @@
     </div>
 
     <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Registrati</button>
+
+    <a href="/signup" class="mt-3 text-center">Hai già il pin per votare? Clicca qui</a>
 </form>
 
 <?= view_cell("\App\Libraries\ViewCells::footer") ?>
