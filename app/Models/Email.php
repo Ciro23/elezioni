@@ -30,7 +30,7 @@ class Email extends Model {
     }
 
     public function sendEmail(string $user) {
-        $builder = $this->select("hash, email");
+        $builder = $this->select("hash, email, pin");
         $builder->join("utenti", "email_hashes.utente = utenti.tessera_elettorale");
         $builder->where("email_hashes.utente", $user);
         
@@ -38,6 +38,7 @@ class Email extends Model {
 
         $userEmail = $result->email;
         $hash = $result->hash;
+        $pin = $result->pin;
 
         $url = base_url() . "/signup/verificate-email/" . $hash;
 
@@ -45,8 +46,8 @@ class Email extends Model {
         $email->setFrom('develop@mmcomputers.it', 'Develop Develop');
         $email->setTo($userEmail);
         $email->setSubject("Verifica la tua email - Votazioni parlamentari");
-        $email->setMessage("Clicca <a href='{$url}'>qui</a> per verificare il tuo indirizzo email");
-        var_dump($email->send());
+        $email->setMessage("Clicca <a href='{$url}'>qui</a> per verificare il tuo indirizzo email. Pin unico per votare: {$pin}");
+        $email->send();
     }
 
     public function verificate(string $hash) {
