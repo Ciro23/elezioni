@@ -8,6 +8,12 @@
         È anche possibile non esprimere alcuna preferenza
     </p>
 
+    <?php
+    if (isset($errors)) {
+        echo $errors;
+    }
+    ?>
+
     <label class="form-label" for="partito">Partito</label>
     <select id="partito" class="form-select form-select mb-3" name="partito">
         <option value="">-- seleziona un partito --</option>
@@ -19,12 +25,12 @@
     </select>
 
     <label for="lista-candidati-1" class="form-label">Candidato 1</label>
-    <select id="lista-candidati-1" name="candidato-1" class="lista-candidati form-select form-select mb-3">
+    <select id="lista-candidati-1" name="candidato_1" class="lista-candidati form-select form-select mb-3">
         <option value="">-- seleziona prima un partito --</option>
     </select>
 
     <label for="lista-candidati-2" class="form-label">Candidato 2</label>
-    <select id="lista-candidati-2" name="candidato-2" class="lista-candidati form-select form-select mb-3">
+    <select id="lista-candidati-2" name="candidato_2" class="lista-candidati form-select form-select mb-3">
         <option value="">-- seleziona prima il candidato 1 --</option>
     </select>
 
