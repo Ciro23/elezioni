@@ -1,39 +1,20 @@
 <?= view_cell("\App\Libraries\ViewCells::header") ?>
 
-<body style="background-color: #e6ffff;">
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card bg-light" style="border-radius: 1rem;">
-                        <div class="card-body p-5 text-center">
+<form action="/login" method="post" style="width: 400px" class="w-30 center mt-4 mx-auto d-flex flex-column justift-content-between">
+    <h2 class="text-center" style="color:#00b8e6">Accedi tramite pin unico</h2>
 
-                            <div class="mb-md-5 mt-md-4 pb-5">
+    <?php
+    if (isset($errors)) {
+        echo $errors;
+    }
+    ?>
+    
+    <div class="form-group pb-3">
+        <label class="form-label" for="pin">Pin unico</label>
+        <input type="text" id="pin" name="pin" class="form-control" maxlength="10">
+    </div>
 
-                                <h2 class="fw-bold mb-2 text-uppercase" style="color:#008fb3">Login</h2>
-                                <hr>
+    <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Entra</button>
+</form>
 
-                                <?php
-                                if (isset($errors)) {
-                                    echo $errors;
-                                }
-                                ?>
-
-                                <div class="form-outline form-white mb-4">
-                                    <label class="form-label" for="pin">Pin</label>
-                                    <input type="text" id="pin" class="form-control form-control-lg" placeholder="Inserisci Pin" />
-                                </div>
-
-                                <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Registrati</button>
-
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-</body>
 <?= view_cell("\App\Libraries\ViewCells::footer") ?>

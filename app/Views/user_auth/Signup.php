@@ -1,70 +1,67 @@
 <?= view_cell("\App\Libraries\ViewCells::header") ?>
 
-<body style="background-color: #e6ffff;">
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100 row d-flex justify-content-center align-items-center col-12 col-md-8 col-lg-6 col-xl-5 card bg-light">
-            <div class="card-body p-5 text-center">
-                <form class="mb-md-5 mt-md-4 pb-5" action="/signup" method="post">
+<form action="/signup" method="post" style="width: 800px" class="w-30 center mt-4 mx-auto d-flex flex-column justift-content-between">
 
-                    <h2 class="fw-bold mb-2 text-uppercase" style="color:#008fb3">Registrati</h2>
-                    <hr>
+    <h2 class="text-center" style="color:#00b8e6">Registrazione</h2>
 
-                    <?php
-                    if (isset($errors)) {
-                        echo $errors;
-                    }
-                    ?>
+    <?php
+    if (isset($errors)) {
+        echo $errors;
+    }
+    ?>
 
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="numero_scheda">Numero Scheda Elettorale</label>
-                        <input type="text" id="numero_scheda" name="tessera_elettorale" class="form-control form-control-lg" maxlength="9" placeholder="Inserisci Numero Scheda Elettorale">
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" class="form-control form-control-lg" maxlength="30" placeholder="Inserisci Nome" />
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="cognome">Cognome</label>
-                        <input type="text" id="cognome" name="cognome" class="form-control form-control-lg" maxlength="30" placeholder="Inserisci Cognome" />
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="email">email</label>
-                        <input type="email" id="email" name="email" class="form-control form-control-lg" maxlength="30" placeholder="Inserisci Email" />
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="eta">Età</label>
-                        <input type="number" id="eta" name="eta" class="form-control form-control-lg" placeholder="Inserisci Età" />
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="sesso">Sesso</label>
-                        <select class="form-select form-select-lg" id="sesso" name="sesso" placeholder="Inserisci Sesso">Sesso
-                            <option value="F">Femmina</option>
-                            <option value="M">Maschio</option>
-                        </select>
-                    </div>
-
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="numScheda">Regione</label>
-                        <select class="form-select form-select-lg" name="regione" placeholder="Inserisci Regione">
-                            <?php
-                            foreach ($regions as $region) {
-                                echo "<option value='{$region->id}'>{$region->nome}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                    <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Registrati</button>
-
-                </form>
+    <div class="d-flex justify-content-between" style="gap: 30px">
+        <div class="w-50">
+            <div class="form-group pb-3">
+                <label class="form-label" for="numero_scheda">Numero scheda elettorale</label>
+                <input type="text" id="numero_scheda" name="tessera_elettorale" class="form-control" maxlength="9" placeholder="021108800">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control" maxlength="30" placeholder="Mario">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="cognome">Cognome</label>
+                <input type="text" id="cognome" name="cognome" class="form-control" maxlength="30" placeholder="Rossi">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" maxlength="30" placeholder="m.rossi@gmail.com">
             </div>
         </div>
-    </section>
-</body>
+
+        <div class="w-50">
+            <div class="form-group pb-3">
+                <label class="form-label" for="eta">Età</label>
+                <input type="number" id="eta" name="eta" class="form-control">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="sesso">Sesso</label>
+                <select class="form-select" id="sesso" name="sesso">Sesso
+                    <option value="">-- seleziona sesso --</option>
+                    <option value="F">Femmina</option>
+                    <option value="M">Maschio</option>
+                </select>
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="numScheda">Regione</label>
+                <select class="form-select" name="regione">
+                    <?php
+                foreach ($regions as $region) {
+                    echo "<option value='{$region->id}'>{$region->nome}</option>";
+                }
+                ?>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Registrati</button>
+</form>
 
 <?= view_cell("\App\Libraries\ViewCells::footer") ?>
