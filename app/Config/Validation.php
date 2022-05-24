@@ -44,7 +44,7 @@ class Validation
     // Rules
     //--------------------------------------------------------------------
 
-    public $user = [
+    public array $user = [
 		"tessera_elettorale" => "required|is_unique[utenti.tessera_elettorale]|max_length[10]",
 		"nome" => "required|alpha_space|max_length[30]",
 		"cognome" => "required|alpha_space|max_length[30]",
@@ -53,4 +53,18 @@ class Validation
 		"sesso" => "required",
         "regione" => "required|integer",
 	];
+
+    public array $login = [
+        "pin" => "required|does_pin_exist[pin]",
+    ];
+
+    public array $login_errors = [
+        "pin" => [
+            "does_pin_exist" => "Il pin non esiste",
+        ],
+    ];
+
+    public array $vote = [
+        "partito" => "required",
+    ];
 }
