@@ -19,10 +19,22 @@ class Vote extends BaseController {
     }
 
     public function vote() {
-        $model = new \App\Models\Party();
+        $voteModel = new \App\Models\Vote();
         
         if ($this->validate("vote")) {
-            
+            $formData = $this->request->getPost();
+            $voteModel->save($formData);
+
+            $this->session->destroy();
+
+            return redirect("risultati");
         }
+
+        $model = new \App\Models\Party();
+        $this->data['parties'] = $model->getAllParties();
+        $this->data['candidates'] = $model->getAllCandidates();
+        $this->data['errors'] = $this->validator->listErrors("custom_errors");
+
+        echo view("voting/Vote", $this->data);
     }
 }
