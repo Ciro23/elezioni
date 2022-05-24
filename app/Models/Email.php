@@ -43,7 +43,7 @@ class Email extends Model {
 
         $email = service("email");
         $email->setFrom('develop@mmcomputers.it', 'Develop Develop');
-        $email->setTo("ciro.sorre23@gmail.com");
+        $email->setTo($userEmail);
         $email->setSubject("Verifica la tua email - Votazioni parlamentari");
         $email->setMessage("Clicca <a href='{$url}'>qui</a> per verificare il tuo indirizzo email");
         var_dump($email->send());
