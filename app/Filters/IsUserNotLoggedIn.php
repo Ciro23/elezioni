@@ -12,7 +12,7 @@ class IsUserNotLoggedIn implements FilterInterface {
         $session = session();
         
         if ($session->is_logged_in === true) {
-            return redirect()->route("votazione");
+            return redirect()->route("vote");
         }
     }
 
