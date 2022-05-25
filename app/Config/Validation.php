@@ -95,6 +95,7 @@ class Validation
     public array $login_errors = [
         "pin" => [
             "does_pin_exist" => "Il pin non esiste",
+            "has_not_voted" => "Impossibile votare più di una volta",
         ],
     ];
 
