@@ -61,8 +61,16 @@ $routes->group(
         "filter" => "can_login_or_signup",
     ],
     function ($routes) {
-        $routes->get("", "Login::index");
+        $routes->get("", "Login::index", ["as" => "login"]);
         $routes->post("", "Login::login");
+    }
+);
+
+$routes->group(
+    "retrieve-pin",
+    function ($routes) {
+        $routes->get("", "PinRetriver::index");
+        $routes->post("", "PinRetriver::sendEmail");
     }
 );
 
