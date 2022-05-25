@@ -13,7 +13,14 @@ class EmailVerification extends BaseController {
 
     public function sendEmail(string $user): void {
         $emailModel = new \App\Models\Email();
-        $emailModel->sendEmail($user);
+        $userModel = new \App\Models\User();
+        $userData = $userModel->getEmailPinHash($user);
+
+        $url = base_url() . "/signup/verificate-email/" . $userData->hash;
+        $subject = "Verifica la tua email - Votazioni parlamentari";
+        $message = "Clicca <a href='{$url}'>qui</a> per verificare il tuo indirizzo email. Pin unico per votare: {$userData->pin}";
+
+        $emailModel->sendEmail($userData->email, $subject, $message);
 
         echo view("email_verification/Sending", $this->data);
     }

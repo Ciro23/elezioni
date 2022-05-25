@@ -53,37 +53,27 @@ class User extends Model {
         return $builder->countAllResults() === 1;
     }
 
+    public function getEmailPinHash(string $id): object {
+        $builder = $this->select("hash, email, pin");
+        $builder->join("utenti", "email_hashes.utente = utenti.tessera_elettorale");
+        $builder->where("email_hashes.utente", $id);
+        
+        return $builder->get()->getRow();
+    }
+
     /**
-     * gets the user id by their email
+     * gets the user pin by their email
      * 
      * @param string $email
      * 
      * @return string|null
      */
-    public function getUserIdByEmail(string $email): string|null {
-        $builder = $this->select("id");
+    public function getUserPinByEmail(string $email): string|null {
+        $builder = $this->select("pin");
         $builder->where("email", $email);
 
         if ($builder->countAllResults(false) === 1) {
-            return $builder->get()->getRow()->id;
-        }
-
-        return null;
-    }
-
-    /**
-     * gets the user details by their id
-     * 
-     * @param string $id
-     * 
-     * @return object|null
-     */
-    public function getUserDetails(string $id): object|null {
-        $builder = $this->select();
-        $builder->where("id", $id);
-
-        if ($builder->countAllResults(false) === 1) {
-            return $builder->get()->getRow();
+            return $builder->get()->getRow()->pin;
         }
 
         return null;

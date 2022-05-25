@@ -29,24 +29,12 @@ class Email extends Model {
         return $data;
     }
 
-    public function sendEmail(string $user) {
-        $builder = $this->select("hash, email, pin");
-        $builder->join("utenti", "email_hashes.utente = utenti.tessera_elettorale");
-        $builder->where("email_hashes.utente", $user);
-        
-        $result = $builder->get()->getRow();
-
-        $userEmail = $result->email;
-        $hash = $result->hash;
-        $pin = $result->pin;
-
-        $url = base_url() . "/signup/verificate-email/" . $hash;
-
+    public function sendEmail(string $userEmail, string $subject, string $message): void {
         $email = service("email");
         $email->setFrom('develop@mmcomputers.it', 'Develop Develop');
         $email->setTo($userEmail);
-        $email->setSubject("Verifica la tua email - Votazioni parlamentari");
-        $email->setMessage("Clicca <a href='{$url}'>qui</a> per verificare il tuo indirizzo email. Pin unico per votare: {$pin}");
+        $email->setSubject($subject);
+        $email->setMessage($message);
         $email->send();
     }
 
