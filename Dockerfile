@@ -28,16 +28,16 @@ RUN docker-php-ext-install \
     mysqli
 
 ENV CI_ENVIRONMENT=production
-ENV database.default.hostname=localhost
-ENV database.default.database=ci4
-ENV database.default.username=root
-ENV database.default.password=root
-ENV database.default.port=3306
+ENV DB_HOST=localhost
+ENV DB_DATABASE=ci4
+ENV DB_USERNAME=root
+ENV DB_PASSWORD=root
+ENV DB_PORT=3306
 ENV PHP_MEMORY_LIMIT=512M
 
 RUN a2enmod rewrite headers
 
-RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY ./ /var/www/html/
 
@@ -61,6 +61,15 @@ EXPOSE 80
 
 # docker run -d \
 #     --name=elezioni \
-#     --net=proxynet \
+#     --net=your-net \
 #     -p 8080:80 \
+#     -e BASE_URL="your-base-url" \
+#     -e DB_HOST=localhost \
+#     -e DB_DATABASE=ci4 \
+#     -e DB_USERNAME=root \
+#     -e DB_PASSWORD=root \
+#     -e DB_PORT=3306 \
 #     elezioni:latest
+
+#     # -e SMTP_ADDRESS="youremail" \
+#     # -e SMTP_PASSWORD="your-password" \
