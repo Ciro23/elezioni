@@ -12,10 +12,13 @@ class UserRules {
      * 
      * @return bool
      */
-    public function are_credentials_correct(string $pin, string $fields, array $data): bool {
+    public function does_pin_exist(string $pin, string $fields, array $data): bool {
         $userModel = new \App\Models\User();
-        $hashedPassword = $userModel->getUserPasswordByPin($pin);
+        return $userModel->doesPinExist($pin);
+    }
 
-        return password_verify($data['password'], $hashedPassword);
+    public function has_not_voted(string $pin, string $fields, array $data): bool {
+        $userModel = new \App\Models\User();
+        return !$userModel->hasVoted($pin);
     }
 }

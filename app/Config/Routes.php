@@ -31,12 +31,67 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Signup::index');
-$routes->post('signup-action', 'Signup::signup');
+// $routes->get('/', 'Signup::index');
 
-$routes->get("votazione", "Votazione::index", [
-    "as" => "votazione",
-]);
+$routes->get(
+    "/", 
+    "Home::index",
+    [
+        "filter" => "can_login_or_signup",
+        "as" => "home",
+    ],
+);
+
+$routes->group(
+    "signup",
+    [
+        "filter" => "can_login_or_signup",
+    ],
+    function ($routes) {
+        $routes->get("", "Signup::index");
+        $routes->post("", "Signup::signup");
+        $routes->get("send-email/(:segment)", "EmailVerification::sendEmail/$1");
+        $routes->get("verificate-email/(:segment)", "EmailVerification::verificate/$1");
+    }
+);
+
+$routes->group(
+    "login",
+    [
+        "filter" => "can_login_or_signup",
+    ],
+    function ($routes) {
+        $routes->get("", "Login::index", ["as" => "login"]);
+        $routes->post("", "Login::login");
+    }
+);
+
+$routes->group(
+    "retrieve-pin",
+    function ($routes) {
+        $routes->get("", "PinRetriver::index");
+        $routes->post("", "PinRetriver::sendEmail");
+    }
+);
+
+$routes->get("logout", "Login::logout");
+
+$routes->group(
+    "vote",
+    [
+        "filter" => "is_logged_in",
+    ],
+    function ($routes) {
+    $routes->get(
+        "",
+        "Vote::index",
+        ["as" => "vote"],
+    );
+
+    $routes->post("", "Vote::vote");
+});
+
+$routes->get("results", "Result::index");
 
 /*
  * --------------------------------------------------------------------

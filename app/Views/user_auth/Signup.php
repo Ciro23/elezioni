@@ -1,38 +1,70 @@
 <?= view_cell("\App\Libraries\ViewCells::header") ?>
 
-<form action="/signup-action" method="post">
+<form action="/signup" method="post" style="width: 800px" class="w-30 center mt-4 mx-auto d-flex flex-column justift-content-between">
+
+    <h2 class="text-center" style="color:#00b8e6">Registrazione</h2>
+    <p class="text-center">Registrati per ottenere il pin per la votazione</p>
+
     <?php
     if (isset($errors)) {
         echo $errors;
     }
     ?>
 
-    <label for="tessera-elettorale">Numero tessera elettorale</label>
-    <input type="text" name="tessera-elettorale" id="tessera-elettorale" maxlength="10">
+    <div class="d-flex justify-content-between" style="gap: 30px">
+        <div class="w-50">
+            <div class="form-group pb-3">
+                <label class="form-label" for="numero_scheda">Numero scheda elettorale</label>
+                <input type="text" id="numero_scheda" name="tessera_elettorale" class="form-control" maxlength="9" placeholder="021108800">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" class="form-control" maxlength="30" placeholder="Mario">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="cognome">Cognome</label>
+                <input type="text" id="cognome" name="cognome" class="form-control" maxlength="30" placeholder="Rossi">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" maxlength="30" placeholder="m.rossi@gmail.com">
+            </div>
+        </div>
 
-    <label for="nome">Nome</label>
-    <input type="text" name="nome" id="nome" maxlength="30">
+        <div class="w-50">
+            <div class="form-group pb-3">
+                <label class="form-label" for="eta">Età</label>
+                <input type="number" id="eta" name="eta" class="form-control">
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="sesso">Sesso</label>
+                <select class="form-select" id="sesso" name="sesso">Sesso
+                    <option value="">-- seleziona sesso --</option>
+                    <option value="F">Femmina</option>
+                    <option value="M">Maschio</option>
+                </select>
+            </div>
+            
+            <div class="form-group pb-3">
+                <label class="form-label" for="numScheda">Regione</label>
+                <select class="form-select" name="regione">
+                    <?php
+                foreach ($regions as $region) {
+                    echo "<option value='{$region->id}'>{$region->nome}</option>";
+                }
+                ?>
+                </select>
+            </div>
+        </div>
+    </div>
 
-    <label for="cognome">Cognome</label>
-    <input type="text" name="cognome" id="cognome" maxlength="30">
+    <button class="btn px-5" id="registrati" type="submit" style="background-color: #00b8e6; border-color:#008fb3; color:white">Registrati</button>
 
-    <label for="eta">Età</label>
-    <input type="number" name="eta" id="eta">
-
-    <label for="sesso-m">Maschio</label>
-    <input type="radio" name="sesso" id="sesso-m" value="m">
-    
-    <label for="sesso-f">Femmina</label>
-    <input type="radio" name="sesso" id="sesso-f" value="f">
-
-    <label for="regione">Regione</label>
-    <select name="regione" id="regione">
-        <?php foreach ($regioni as $regione): ?>
-            <option value="<?= $regione['id'] ?>"><?= $regione['nome'] ?></option>
-        <?php endforeach ?>
-    </select>
-
-    <input type="submit" name="submit" value="Registrati">
+    <a href="/signup" class="mt-3 text-center">Hai già il pin per votare? Clicca qui</a>
 </form>
 
 <?= view_cell("\App\Libraries\ViewCells::footer") ?>

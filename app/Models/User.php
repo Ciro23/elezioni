@@ -9,7 +9,7 @@ class User extends Model {
 
     protected $table = "utenti";
 
-    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "eta", "pin", "ha_votato", "sesso", "regione"];
+    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "email", "eta", "pin", "ha_votato", "sesso", "regione"];
 
     protected $validationRules = "user";
 
@@ -26,28 +26,17 @@ class User extends Model {
         $randomId = new RandomId();
 
         do {
-            $data['data']['pin'] = $randomId->generateRandomId();
-        } while ($this->doesUserExist($data['data']['pin']));
+            $data['data']['pin'] = $randomId->generateRandomId(10);
+        } while ($this->doesPinExist($data['data']['pin']));
 
         return $data;
     }
 
-    /**
-     * gets the user password given their pin
-     * 
-     * @param string $pin
-     * 
-     * @return string|null
-     */
-    public function getUserPasswordByPin(string $pin): string|null {
-        $builder = $this->select("password");
+    public function hasVoted(string $pin) {
+        $builder = $this->select();
         $builder->where("pin", $pin);
 
-        if ($builder->countAllResults(false) === 1) {
-            return $builder->get()->getRow()->password;
-        }
-
-        return null;
+        return $builder->countAllResults(false) === 1;
     }
 
     /**
@@ -57,44 +46,34 @@ class User extends Model {
      * 
      * @return bool
      */
-    public function doesUserExist(string $id): bool {
-        $builder = $this->select("tessera_elettorale");
-        $builder->where("tessera_elettorale", $id);
+    public function doesPinExist(string $pin): bool {
+        $builder = $this->select("pin");
+        $builder->where("pin", $pin);
 
         return $builder->countAllResults() === 1;
     }
 
+    public function getEmailPinHash(string $id): object {
+        $builder = $this->select("hash, email, pin");
+        $builder->join("utenti", "email_hashes.utente = utenti.tessera_elettorale");
+        $builder->where("email_hashes.utente", $id);
+        
+        return $builder->get()->getRow();
+    }
+
     /**
-     * gets the user id by their email
+     * gets the user pin by their email
      * 
      * @param string $email
      * 
      * @return string|null
      */
-    public function getUserIdByEmail(string $email): string|null {
-        $builder = $this->select("id");
+    public function getUserPinByEmail(string $email): string|null {
+        $builder = $this->select("pin");
         $builder->where("email", $email);
 
         if ($builder->countAllResults(false) === 1) {
-            return $builder->get()->getRow()->id;
-        }
-
-        return null;
-    }
-
-    /**
-     * gets the user details by their id
-     * 
-     * @param string $id
-     * 
-     * @return object|null
-     */
-    public function getUserDetails(string $id): object|null {
-        $builder = $this->select();
-        $builder->where("id", $id);
-
-        if ($builder->countAllResults(false) === 1) {
-            return $builder->get()->getRow();
+            return $builder->get()->getRow()->pin;
         }
 
         return null;
