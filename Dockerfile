@@ -27,12 +27,12 @@ RUN docker-php-ext-install \
     pdo_mysql \
     mysqli
 
-# ENV CI_ENVIRONMENT=production
-# ENV database.default.hostname=localhost
-# ENV database.default.database=ci4
-# ENV database.default.username=root
-# ENV database.default.password=root
-# ENV database.default.port=3306
+ENV CI_ENVIRONMENT=production
+ENV database.default.hostname=localhost
+ENV database.default.database=ci4
+ENV database.default.username=root
+ENV database.default.password=root
+ENV database.default.port=3306
 ENV PHP_MEMORY_LIMIT=512M
 
 RUN a2enmod rewrite headers
