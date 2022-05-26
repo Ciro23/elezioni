@@ -87,10 +87,10 @@ class Database extends Config
             $this->defaultGroup = 'tests';
         }
 
-        $this->default['hostname'] = getenv("database.default.hostname");
-        $this->default['username'] = getenv("database.default.username");
-        $this->default['password'] = getenv("database.default.password");
-        $this->default['database'] = getenv("database.default.database");
-        $this->default['port'] = getenv("database.default.port");
+        $this->default['hostname'] = getenv("DB_HOST") ? getenv("DB_HOST") : $this->default['hostname'];
+        $this->default['username'] = getenv("DB_USERNAME") ? getenv("DB_USERNAME") : $this->default['username'];
+        $this->default['password'] = getenv("DB_PASSWORD") ? getenv("DB_PASSWORD") : $this->default['password'];
+        $this->default['database'] = getenv("DB_DATABASE") ? getenv("DB_DATABASE") : $this->default['database'];
+        $this->default['port'] = getenv("DB_PORT") ? getenv("DB_PORT") : $this->default['port'];
     }
 }
