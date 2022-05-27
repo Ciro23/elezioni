@@ -171,7 +171,7 @@ class Email extends BaseConfig
 
     public function __construct() {
         parent::__construct();
-        $this->fromEmail = getenv("email.from");
-        $this->SMTPPass = getenv("email.SMTPPass");
+        $this->fromEmail = getenv("SMTP_FROM") ? getenv("SMTP_FROM") : $this->fromEmail;
+        $this->SMTPPass = getenv("SMTP_PASS") ? getenv("SMTP_PASS") : $this->SMTPPass;
     }
 }
