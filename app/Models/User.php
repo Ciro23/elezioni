@@ -55,7 +55,7 @@ class User extends Model {
 
     public function getEmailPinHash(string $id): object {
         $builder = $this->select("hash, email, pin");
-        $builder->join("utenti", "email_hashes.utente = utenti.tessera_elettorale");
+        $builder->join("email_hashes", "email_hashes.utente = utenti.tessera_elettorale");
         $builder->where("email_hashes.utente", $id);
         
         return $builder->get()->getRow();
