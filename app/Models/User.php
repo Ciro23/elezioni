@@ -13,7 +13,7 @@ class User extends Model {
 
     protected $useAutoIncrement = false;
 
-    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "email", "eta", "pin", "ha_votato", "sesso", "regione"];
+    protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "email", "eta", "pin", "ha_votato", "sesso", "regione", "verificato"];
 
     protected $validationRules = "user";
 
@@ -36,7 +36,12 @@ class User extends Model {
         return $data;
     }
 
-    public function hasVoted(string $pin) {
+    /**
+     * @param string $pin
+     * 
+     * @return bool
+     */
+    public function hasVoted(string $pin): bool {
         $builder = $this->select();
         $builder->where("pin", $pin);
 
@@ -44,9 +49,26 @@ class User extends Model {
     }
 
     /**
-     * checks if a user already exists
+     * sets the verificated status true in the database
      * 
-     * @param string $id
+     * @param string pin
+     */
+    public function updateVerificatedStatus($pin): void {
+        $this->update($pin, ['verificato' => 1]);
+    }
+
+    public function getUserElectoralCardByEmailHash($hash): string {
+        $builder = $this->select("tessera_elettorale");
+        $builder->join("email_hashes", "email_hashes.utente = utenti.tessera_elettorale");
+        $builder->where("email_hashes.hash", $hash);
+
+        return $builder->get()->getRow()->tessera_elettorale;
+    }
+
+    /**
+     * checks if a pin is already present
+     * 
+     * @param string $pin
      * 
      * @return bool
      */
@@ -57,6 +79,9 @@ class User extends Model {
         return $builder->countAllResults() === 1;
     }
 
+    /**
+     * gets the email, pin, and hash of a user
+     */
     public function getEmailPinHash(string $id): object {
         $builder = $this->select("hash, email, pin");
         $builder->join("email_hashes", "email_hashes.utente = utenti.tessera_elettorale");
@@ -66,7 +91,7 @@ class User extends Model {
     }
 
     /**
-     * gets the user pin by their email
+     * gets the user pin given their email
      * 
      * @param string $email
      * 
@@ -83,6 +108,14 @@ class User extends Model {
         return null;
     }
 
+    /**
+     * gets user electoral card number (primary key)
+     * given their pin
+     * 
+     * @param string $pin
+     * 
+     * @return string|null
+     */
     public function getUserElectoralCardByPin(string $pin): string|null {
         $builder = $this->select("tessera_elettorale");
         $builder->where("pin", $pin);

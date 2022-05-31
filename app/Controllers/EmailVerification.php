@@ -32,6 +32,10 @@ class EmailVerification extends BaseController {
             throw new PageNotFoundException();
         }
 
+        $userModel = new \App\Models\User();
+        $electoralCard = $userModel->getUserElectoralCardByEmailHash($hash);
+        $userModel->updateVerificatedStatus($electoralCard);
+
         $emailModel->delete($hash);
 
         return redirect()->to(base_url() . "/login/?welcome_popup=true");
