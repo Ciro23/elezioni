@@ -36,16 +36,27 @@ class User extends Model {
         return $data;
     }
 
+    public function getUserDataByPin(string $pin): object {
+        $builder = $this->select();
+        $builder->where("pin", $pin);
+
+        if ($builder->countAllResults(false) === 1) {
+            return $builder->get()->getRow();
+        }
+
+        return [];
+    }
+
     /**
      * @param string $pin
      * 
      * @return bool
      */
     public function hasVoted(string $pin): bool {
-        $builder = $this->select();
+        $builder = $this->select("ha_votato");
         $builder->where("pin", $pin);
 
-        return $builder->countAllResults(false) === 1;
+        return $builder->get()->getRow()->ha_votato === "1";
     }
 
     /**
