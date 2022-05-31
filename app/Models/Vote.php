@@ -8,7 +8,7 @@ class Vote extends Model {
  
     protected $table = "voti";
 
-    protected $allowedFields = ["partito", "candidato_1", "candidato_2"];
+    protected $allowedFields = ["partito", "candidato_1", "candidato_2", "sesso", "eta", "regione"];
 
     protected $validationRules = "vote";
 
@@ -18,11 +18,10 @@ class Vote extends Model {
      * @return array
      */
     public function getVotesForParties(): array {
-        $builder = $this->select("partiti.nome, count(voti.id) as n_voti");
-        $builder->join("partiti", "partiti.id = voti.partito");
-        $builder->groupBy("partito");
+        $db = db_connect();
+        $result = $db->query("select partiti.nome, (count(*) / (select count(*) from voti) * 100) as percentuale, count(*) as n_voti from voti join partiti on voti.partito = partiti.id group by partiti.id");
 
-        return $builder->get()->getResult();
+        return $result->getResult();
     }
 
     /**
@@ -32,8 +31,20 @@ class Vote extends Model {
      */
     public function getVotesForCandidates(): array {
         $db = db_connect();
-        $result = $db->query("select candidati.nome, candidati.cognome, candidati.partito, (count(*) / (select count(*) from voti) * 50) as percentuale, count(*) as voti from candidati join voti on voti.candidato_1 = candidati.id or voti.candidato_2 = candidati.id group by candidati.id");
+        $result = $db->query("select candidati.nome as nome, candidati.cognome, partiti.nome as partito, (count(*) / (select count(*) from voti) * 50) as percentuale, count(*) as n_voti from candidati join voti on voti.candidato_1 = candidati.id or voti.candidato_2 = candidati.id join partiti on partiti.id = candidati.partito group by candidati.id");
 
-        return $result->getResultArray();
+        return $result->getResult();
+    }
+
+    /**
+     * gets the number of votes and percentuage based on gender
+     * 
+     * @return array
+     */
+    public function getVotesForGender(): array {
+        $db = db_connect();
+        $result = $db->query("select voti.sesso, count(*) as n_voti, (count(*) / (select count(*) from voti) * 100) as percentuale from voti GROUP BY voti.sesso");
+
+        return $result->getResult();
     }
 }
