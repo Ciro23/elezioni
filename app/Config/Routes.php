@@ -91,7 +91,7 @@ $routes->group(
     $routes->post("", "Vote::vote");
 });
 
-$routes->get("results", "Result::index");
+$routes->get("results", "Result::index", ["as" => "results"]);
 
 /*
  * --------------------------------------------------------------------
