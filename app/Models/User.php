@@ -9,6 +9,10 @@ class User extends Model {
 
     protected $table = "utenti";
 
+    protected $primaryKey = "tessera_elettorale";
+
+    protected $useAutoIncrement = false;
+
     protected $allowedFields = ["tessera_elettorale", "nome", "cognome", "email", "eta", "pin", "ha_votato", "sesso", "regione"];
 
     protected $validationRules = "user";
@@ -79,31 +83,13 @@ class User extends Model {
         return null;
     }
 
-    /**
-     * checks if the user is an admin
-     * 
-     * @param string $id
-     * 
-     * @return bool
-     */
-    public function isUserAdmin(string $id): bool {
-        return $this->getUserRole($id) == 1;
-    }
+    public function getUserElectoralCardByPin(string $pin): string|null {
+        $builder = $this->select("tessera_elettorale");
+        $builder->where("pin", $pin);
 
-    /**
-     * gets the user role by their id
-     * 
-     * @param string $id
-     * 
-     * @return int|null
-     */
-    public function getUserRole(string $id): int|null {
-        // $builder = $this->select("role");
-        // $builder->where("id", $id);
-
-        // if ($builder->countAllResults(false) == 1) {
-        //     return $builder->get()->getRow()->role;
-        // }
+        if ($builder->countAllResults(false) === 1) {
+            return $builder->get()->getRow()->tessera_elettorale;
+        }
 
         return null;
     }
