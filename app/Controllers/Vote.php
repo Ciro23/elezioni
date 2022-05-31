@@ -31,9 +31,17 @@ class Vote extends BaseController {
             if ($formData['candidato_2'] === "") {
                 $formData['candidato_2'] = null;
             }
+            
+            $userModel = new \App\Models\User();
+            $userData = $userModel->getUserDataByPin($this->session->pin);
+
+            $formData = array_merge($formData, [
+                "eta" => $userData->eta,
+                "regione" => $userData->regione,
+                "sesso" => $userData->sesso,
+            ]);
 
             $voteModel->save($formData);
-            $userModel = new \App\Models\User();
 
             $electoralCardNumber = $userModel->getUserElectoralCardByPin($this->session->pin);
             $userModel->update($electoralCardNumber, ['ha_votato' => 1]);
