@@ -14,7 +14,7 @@ class Email extends BaseConfig
 	/**
 	 * @var string
 	 */
-	public $fromName;
+	public $fromName = "Votazioni Parlamentari";
 
 	/**
 	 * @var string
@@ -54,7 +54,7 @@ class Email extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $SMTPUser = 'test@gmail.com';
+	public $SMTPUser;
 
 	
 	/**
@@ -173,5 +173,6 @@ class Email extends BaseConfig
         parent::__construct();
         $this->fromEmail = getenv("SMTP_FROM") ? getenv("SMTP_FROM") : $this->fromEmail;
         $this->SMTPPass = getenv("SMTP_PASS") ? getenv("SMTP_PASS") : $this->SMTPPass;
+		$this->SMTPUser = getenv("SMTP_USER") ? getenv("SMTP_USER") : $this->SMTPUser;
     }
 }
