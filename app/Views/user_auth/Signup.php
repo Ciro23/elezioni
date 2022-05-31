@@ -37,15 +37,15 @@
         <div class="w-50">
             <div class="form-group pb-3">
                 <label class="form-label" for="eta">Età</label>
-                <input type="number" id="eta" name="eta" class="form-control">
+                <input type="number" id="eta" name="eta" class="form-control" min="18" max="110">
             </div>
             
             <div class="form-group pb-3">
                 <label class="form-label" for="sesso">Sesso</label>
                 <select class="form-select" id="sesso" name="sesso">Sesso
                     <option value="">-- seleziona sesso --</option>
-                    <option value="F">Femmina</option>
-                    <option value="M">Maschio</option>
+                    <option value="f">Femmina</option>
+                    <option value="m">Maschio</option>
                 </select>
             </div>
             
