@@ -2,7 +2,7 @@
 
 <form action="/login" method="post" style="width: 400px" class="w-30 center mt-4 mx-auto d-flex flex-column justift-content-between">
     <h2 class="text-center" style="color:#00b8e6">Accedi tramite pin unico</h2>
-
+    <p class="text-center">Assicurati di esserti già registrato, aver verificato l'email e quindi aver ricevuto il pin per votare</p>
     <?php
     if (isset($errors)) {
         echo $errors;
