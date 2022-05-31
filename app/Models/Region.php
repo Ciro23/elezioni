@@ -10,7 +10,12 @@ class Region extends Model {
 
     protected $allowedFields = ["nome"];
 
-    public function getAllRegions() {
+    /**
+     * returns all the regions in the database
+     * 
+     * @return array
+     */
+    public function getAllRegions(): array {
         $builder = $this->select("*");
 
         if ($builder->countAllResults(false) > 0) {

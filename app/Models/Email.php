@@ -29,6 +29,13 @@ class Email extends Model {
         return $data;
     }
 
+    /**
+     * sends an email to the user with the pin to vote
+     * 
+     * @param string $userEmail
+     * @param string $subject
+     * @param string $message
+     */
     public function sendEmail(string $userEmail, string $subject, string $message): void {
         $email = service("email");
         $email->setFrom('develop@mmcomputers.it', 'Develop Develop');
@@ -38,7 +45,14 @@ class Email extends Model {
         $email->send();
     }
 
-    public function verificate(string $hash) {
+    /**
+     * checks if the email hash is the same stored in the database
+     * 
+     * @param string hash
+     * 
+     * @return bool
+     */
+    public function verificate(string $hash): bool {
         $builder = $this->select("hash");
         $builder->where("hash", $hash);
 

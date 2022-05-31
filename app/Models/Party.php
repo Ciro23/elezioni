@@ -10,12 +10,22 @@ class Party extends Model {
 
     protected $allowedFields = ["nome_partito"];
 
+    /**
+     * returns all the parties in the database
+     * 
+     * @return array
+     */
     public function getAllParties(): array {
         $builder = $this->select();
 
         return $builder->get()->getResult();
     }
 
+    /**
+     * returns all the candidates in the database
+     * 
+     * @return array
+     */
     public function getAllCandidates(): array {
         $builder = $this->select();
         $builder->join("candidati", "partiti.id = candidati.partito");
