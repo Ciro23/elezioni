@@ -18,7 +18,8 @@ class EmailVerification extends BaseController {
 
         $url = base_url() . "/signup/verificate-email/" . $userData->hash;
         $subject = "Verifica la tua email - Votazioni parlamentari";
-        $message = "Clicca <a href='{$url}'>qui</a> per verificare il tuo indirizzo email. Pin unico per votare: {$userData->pin}";
+        $message = "Pin unico per votare: {$userData->pin}<br>";
+        $message .= "Clicca <a href='{$url}'>qui</a> per inserire il pin e votare.";
 
         $emailModel->sendEmail($userData->email, $subject, $message);
 
