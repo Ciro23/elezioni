@@ -19,6 +19,6 @@ class UserRules {
 
     public function has_not_voted(string $pin, string $fields, array $data): bool {
         $userModel = new \App\Models\User();
-        return !$userModel->hasVoted($pin);
+        return $userModel->hasVoted($pin);
     }
 }
