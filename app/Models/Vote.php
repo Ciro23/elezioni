@@ -19,7 +19,10 @@ class Vote extends Model {
      */
     public function getVotesForParties(): array {
         $db = db_connect();
-        $result = $db->query("select partiti.nome, (count(*) / (select count(*) from voti) * 100) as percentuale, count(*) as n_voti from voti join partiti on voti.partito = partiti.id group by partiti.id");
+        $result = $db->query("SELECT partiti.nome, ROUND((COUNT(*) / (SELECT COUNT(*) FROM voti) * 100), 2) AS percentuale, COUNT(*) AS n_voti
+        FROM voti
+        JOIN partiti ON voti.partito=partiti.id
+        GROUP BY partiti.id");
 
         return $result->getResult();
     }
@@ -31,7 +34,11 @@ class Vote extends Model {
      */
     public function getVotesForCandidates(): array {
         $db = db_connect();
-        $result = $db->query("select candidati.nome as nome, candidati.cognome, partiti.nome as partito, (count(*) / (select count(*) from voti) * 50) as percentuale, count(*) as n_voti from candidati join voti on voti.candidato_1 = candidati.id or voti.candidato_2 = candidati.id join partiti on partiti.id = candidati.partito group by candidati.id");
+        $result = $db->query("SELECT candidati.nome AS nome, candidati.cognome, partiti.nome AS partito, ROUND((COUNT(*) / (SELECT COUNT(*) FROM voti) * 50), 2) AS percentuale, COUNT(*) AS n_voti
+        FROM candidati
+        JOIN voti ON voti.candidato_1=candidati.id OR voti.candidato_2=candidati.id
+        JOIN partiti ON partiti.id=candidati.partito
+        GROUP BY candidati.id");
 
         return $result->getResult();
     }
@@ -43,7 +50,53 @@ class Vote extends Model {
      */
     public function getVotesForGender(): array {
         $db = db_connect();
-        $result = $db->query("select voti.sesso, count(*) as n_voti, (count(*) / (select count(*) from voti) * 100) as percentuale from voti GROUP BY voti.sesso");
+        $result = $db->query("SELECT voti.sesso, COUNT(*) as n_voti, ROUND((COUNT(*) / (SELECT COUNT(*) FROM voti) * 100), 2) as percentuale
+        FROM voti
+        GROUP BY voti.sesso");
+
+        return $result->getResult();
+    }
+
+    /**
+     * gets the number of SI
+     * 
+     * @return array
+     */
+    public function getAge(): array {
+        $db = db_connect();
+        $result = $db->query("SELECT (TRUNCATE(utenti.eta, -1) + 10) AS fasciaEta, COUNT(*) AS votanti
+        FROM utenti
+        WHERE utenti.ha_votato IS NOT NULL
+        GROUP BY utenti.eta
+        ORDER BY utenti.eta");
+
+        return $result->getResult();
+    }
+
+    /**
+     * gets the number of SI
+     * 
+     * @return array
+     */
+    public function getRegioni(): array {
+        $db = db_connect();
+        $result = $db->query("SELECT regioni.nome, ROUND((COUNT(*)/(SELECT COUNT(*) FROM utenti WHERE utenti.ha_votato IS NOT NULL)*100), 2) AS percentuale
+        FROM utenti
+        INNER JOIN regioni ON utenti.regione=regioni.id
+        WHERE utenti.ha_votato IS NOT NULL
+        GROUP BY utenti.regione");
+
+        return $result->getResult();
+    }
+
+    /**
+     * gets the number of SI
+     * 
+     * @return array
+     */
+    public function getVotes(): array {
+        $db = db_connect();
+        $result = $db->query("SELECT COUNT(*) AS tot FROM voti");
 
         return $result->getResult();
     }
