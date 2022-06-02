@@ -11,7 +11,7 @@
     
     <?php
         foreach ($votes as $v) {
-            echo "<p>Voti totali: {$votes->tot}</p>";
+            echo "<p>Voti totali: {$v->tot}</p>";
         }
     ?>
     <table class="table">
